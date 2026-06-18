@@ -1,5 +1,5 @@
 
-# PokerChips <img src="src/graphics/redchip.webp" alt="Poker Chips" width="50">
+# PokerChips <img src="src/graphics/redchip.webp" alt="Poker Chips" width="30">
 
 ## Backend --> Justin Maher <img src="src/graphics/java.webp" alt="Poker Chips" width="50">
 
