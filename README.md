@@ -1,8 +1,9 @@
 # PokerChips
 
 Backend: Justin Maher (Java)
-Frontend: Ramy Abdelaty (React.js)
 
+Frontend: Ramy Abdelaty (React.js)
+--------------------------------------
 This Website was created with the intention of letting people play the famous card game without involving real money and to fight against gambling addictions.
  
 
