@@ -1,19 +1,17 @@
 
-# PokerChips
+# PokerChips <img src="src/graphics/redchip.webp" alt="Poker Chips" width="50">
 
 ## Backend
 
-### Justin Maher
+### Justin Maher <img src="src/graphics/java.webp" alt="Poker Chips" width="50">
 
 
-<img src="images/pokerchips.png" alt="Poker Chips" width="50">
 
 
 ## Frontend
 
-### Ramy Abdelaty
+### Ramy Abdelaty <img src="src/graphics/react.webp" alt="Poker Chips" width="50">
 
-![React.js](https://img.shields.io/badge/React.js-blue?style=for-the-badge&logo=react&logoColor=white)
 
 ---
 
