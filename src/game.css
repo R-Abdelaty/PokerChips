@@ -1,0 +1,157 @@
+/* game----------------------------------------------------------------- */
+.game{
+  height: 100dvh;
+  width: var(--width);
+  aspect-ratio: 9/11;
+
+  display: flex;
+  justify-content: center;
+  .table{
+    margin: 3vh 0 0 0;
+    max-width: 500px;
+    aspect-ratio: 11/20;
+    height: 75vh;
+    min-height: 370px;
+    background-color: #1e4431;
+    border-radius: 300px;
+    border: solid 11px rgb(131, 66, 33);
+  }
+  .rounddiv{
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  position: fixed;
+  right: calc((100vw - var(--width))/2);
+  width: 9rem;
+  
+}
+.rounddiv h3{
+  font-size: 2rem;
+}
+
+  .playersgrid{
+    height: 80vh;
+    aspect-ratio: 14/20;
+    max-width: var(--width);
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(4,1fr);
+    opacity: 0;
+    
+    .player{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      
+      .banner{
+        width: 70%;
+        height: 100%;
+        max-height: 12vh;
+        background-color: rgba(0, 0, 0, 0.669);
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+    }
+    
+  }
+
+}
+
+
+.active{
+   border: 5px solid #f5bf29;
+}
+
+.bottombuttons{
+    opacity: 0;
+  width: var(--width);
+
+  height: 20vh;
+  position: absolute;
+  top: 80vh;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  justify-content: center;
+  align-items: center;
+  
+  button{
+    width: 20vw;
+    max-width: 90px;
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    
+    h3{
+        font-size: 2rem;
+    }
+  }
+  .fold{
+    background-image: url(graphics/redchip.webp);
+    background-size: contain;
+    background-color: rgb(0, 0, 0,0);
+    border: none;
+    border: 0px solid #f5bf29;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .foldhold{
+    animation: foldhold 2s ease ;
+  }
+ 
+  .raise{
+    background-image: url(graphics/bluechip.webp);
+    background-size: contain;
+    background-color: rgb(0, 0, 0,0);
+    border: none;
+    border: 0px solid #f5bf29;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .check{
+    background-image: url(graphics/greenchip.webp);
+    background-size: contain;
+    background-color: rgb(0, 0, 0,0);
+    border: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .call{
+    background-image: url(graphics/yellowdchip.webp);
+    background-size: contain;
+    background-color: rgb(0, 0, 0,0);
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .checkdiv{
+        border: 9px solid #f5bf29;
+        border-radius: 300px;
+        width: max-content;
+        
+  }
+
+}
+
+
+.playersgrid,.bottombuttons,.game{
+  max-width: var(--width);
+}

@@ -1,0 +1,211 @@
+html{
+  font-size: 12px;
+}
+
+html,body,h1,h2,h3,h4{
+  padding: none;
+  margin: 0;
+
+}
+*{
+  box-sizing: border-box !important;
+  font-family: "Bebas Neue", serif;
+}
+
+
+button{
+  padding: 0;
+  
+  /* 1. Remove the mobile tap highlight */
+  -webkit-tap-highlight-color: transparent;
+
+  /* 2. Prevent text selection */
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none;      /* IE 10+ and Edge */
+  user-select: none;          /* Standard syntax */
+
+  /* 3. Disable the context menu (Optional) */
+  /* This stops the "Copy/Select" menu from popping up on long-press */
+  -webkit-touch-callout: none;
+
+  -webkit-touch-callout: none; /* Disables the callout menu on iOS/Android */
+  -webkit-user-select: none;
+  user-select: none;
+  
+  /* Ensure the browser doesn't try to handle the hold as a "pan" or "zoom" */
+  touch-action: none; 
+
+}
+
+h1{
+   font-family: "Bebas Neue", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 8rem;
+  color: #f9f6ee;
+  line-height: 7rem;
+  max-width: 80vh ;
+  text-align: center;
+}
+h2{
+   font-family: "Bebas Neue", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 3rem;
+  color: #f9f6ee;
+}
+h3{
+   font-family: "Bebas Neue", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.5rem;
+  color: #f9f6ee;
+}
+h4{
+   font-family: "Bebas Neue", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 3.7rem;
+  color: #f9f6ee;
+  text-align: center;
+}
+#root{
+  width: 100vw;
+  height: 100dvh;
+  height: 100dvh;
+  background-color: #2a5540;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.screen{
+  
+  height: 100dvh;
+  aspect-ratio: 9/11 ;
+  width: var(--width);
+  display: flex;
+  background-color: #1C3048;
+  overflow-x: hidden;
+  overflow: none;
+  scrollbar-width: none;
+
+}
+.backdiv{
+  width: var(--width);
+  height: 5rem;
+  max-height:10vh;
+  
+}
+.back{
+  width: 25vw;
+  max-width: 70px;
+  aspect-ratio: 1/1;
+  background-image: url(graphics/back.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: rgba(0,0,0,0);
+  border: none;
+  cursor: pointer;
+outline: none;
+}
+.screen::-webkit-scrollbar {
+  display: none;
+}
+.red{
+  color: #c70000;
+}
+
+.background{
+  position: fixed;
+ background-image: url(graphics/cardsbackground.webp);
+  background-position: center;
+  
+  background-repeat: none;
+  background-size: cover;
+  height: 100dvh;
+  width: var(--width);
+  aspect-ratio: 9/11;
+  opacity: 0.4;
+  
+}
+
+
+
+.disappear{
+  animation: disappear 0.5s ease-out forwards;
+}
+.appear{
+  animation: appear 0.5s ease-out forwards;
+}
+.center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.middle{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+@keyframes disappear {
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+    height: 0px;
+    margin: 0;
+  }
+  
+}
+@keyframes appear {
+  100%{
+    opacity: 1;
+  }
+  0%{
+    opacity: 0;
+  }
+  
+}
+
+  .btnhold{
+     border-radius: 300px;
+    border: 0px solid #f5bf29;
+      animation: btnhold 0.5s ease-in forwards;
+    }
+     @keyframes btnhold {
+    0%{border: 0px solid #f5bf29;}
+    100%{border: 9px solid #f5bf29;}
+  }
+
+@media (max-height:600px) {
+  html{
+    font-size: 11px;
+  }
+  
+}
+
+@media (max-width:500px) {
+  html{
+    font-size: 12px;
+  }
+  .playerinp{
+    font-size: 2rem !important;
+  }
+  
+}
+@media (max-width:350px) {
+  html{
+    font-size: 8px;
+  }
+  h1{
+    font-size: 6rem;
+  }
+  .table{
+    height: 65vh;
+    margin: 7vh 0 0 0;
+    }
+  
+}
