@@ -5,7 +5,7 @@
 
 ### Justin Maher
 
-![Java](https://img.shields.io/badge/Java-orange?style=for-the-badge&logo=openjdk&logoColor=white)
+![Java](https://user-images.githubusercontent.com/102182985/261034341-f3c03b4b-5cb6-4ef5-ad35-0a457f5e56cd.png)
 
 ## Frontend
 
