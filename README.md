@@ -1,9 +1,9 @@
 
-# PokerChips <img src="src/graphics/redchip.webp" alt="Poker Chips" width="30">
+# PokerChips <img src="Frontend/src/graphics/redchip.webp" alt="Poker Chips" width="30">
 
-## Backend --> Justin Maher <img src="src/graphics/java.webp" alt="Poker Chips" width="50">
+## Backend --> Justin Maher <img src="frontend/src/graphics/java.webp" alt="Poker Chips" width="50">
 
-## Frontend --> Ramy Abdelaty <img src="src/graphics/react.webp" alt="Poker Chips" width="50">
+## Frontend --> Ramy Abdelaty <img src="Frontend/src/graphics/react.webp" alt="Poker Chips" width="50">
 
 ---
 
