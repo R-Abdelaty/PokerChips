@@ -12,6 +12,9 @@ function Game({ width, playern}) {
     const [holdingraise, setraise] = useState(false)
     const [holdingfold, setfold] = useState(false)
     const [checkorcall,setcorc] = useState(false)
+    const [raising,setr] = useState(false)
+    const [raisenum,setrnum] = useState("")
+    const [inv,setinv] = useState(false)
     const timeoutref = useRef(null);
     
     const [table, setTable] = useState(10)
@@ -106,14 +109,26 @@ function Game({ width, playern}) {
         if (holdingraise) {
             timeoutref.current = setTimeout(async() => {
                 if (holdingraise) {
-                    await postrec("raise?money=20","")
-                    await state()
-                    setraise(false)
+                    setr(true)
                 }
             }, 500)
         }
         else { clearTimeout(timeoutref.current); }
     }, [holdingraise])
+    const raisebtn = async()=>{
+        const isNumber = raisenum.trim() !== "" && !Number.isNaN(Number(raisenum));
+        if(isNumber){
+            await postrec(`raise?money=${raisenum}`,"")
+            await state()
+            setr(false)
+            setraise(false)
+        }
+        else{
+            
+        }
+        
+
+    }
 
     //-----------------------------------------
 
@@ -195,11 +210,12 @@ function Game({ width, playern}) {
     return (
         <>
             <div className="game">
+                <div style={{display: raising ? "flex" : "none"}} className="raisemenu"><button className='exit'>X</button><h2>How much?</h2><input type="text" name='raise' value={raisenum} onChange={(e)=>{setrnum(e.target.value)}} placeholder='Enter Amount' /> <button onClick={raisebtn} className='raisebutton'>Raise</button></div>
                 <div className='rounddiv'><h3>Round : {round}</h3></div>
                 <div className="table"></div>
                 <div className="playersgrid appear">
                     <div className='center' style={{gridRow: "2/4", gridColumn: 2, height:"100%"}}> <h2 style={{textAlign: "center"}}>Table <br></br> {table}</h2></div>
-                    <div className="player" style={tableOrderer(1)}><div className={`banner ${current1 && "active"}`}><h3>{player1}</h3><h3>{chips1}</h3></div></div>
+                    <div className="player" style={tableOrderer(1)}><div className={`banner ${folded1 && "fold"} ${current1 && "active"}`}><h3>{player1}</h3><h3>{chips1}</h3></div></div>
                     <div className="player" style={tableOrderer(2)}><div className={`banner ${current2 && "active"}`}><h3>{player2}</h3><h3>{chips2}</h3></div></div>
                     <div className="player" style={{...tableOrderer(3),...(!playing3 && { display: "none" })}}><div className={`banner ${current3 && "active"}`}><h3>{player3}</h3><h3>{chips3}</h3></div></div>
                     <div className="player" style={{...tableOrderer(4),...(!playing4 && { display: "none" })}}><div className={`banner ${current4 && "active"}`}><h3>{player4}</h3><h3>{chips4}</h3></div></div>
