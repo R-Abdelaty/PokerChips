@@ -76,7 +76,7 @@ function Start({ width, Switch,playerN,setN }) {
     for (let i = 0; i < playerN; i++) {
       PLayers.push({ [(names[i] != "") ? names[i] : `Guest${i + 1}`]: chip })
     }
-
+    console.log(PLayers)
     postrec("player", PLayers)
   }
 
