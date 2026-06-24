@@ -1,11 +1,10 @@
 package com.poker.pokergame.service;
 
 import com.poker.pokergame.model.Player;
-import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Service
+
 public class PokerChips {
 
     private int numOfPlayers;
