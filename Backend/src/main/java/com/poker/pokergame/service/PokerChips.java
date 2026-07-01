@@ -216,7 +216,7 @@ public class PokerChips {
 
     public String updateWinner(List<Integer>winner) {
         if(!useWinner){
-            throw new IllegalStateException("no winner yet");
+            throw new IllegalStateException("can't use method, no winner yet");
         }
         int cnt=0;
         for (int i = 0; i < numOfPlayers; i++) {
