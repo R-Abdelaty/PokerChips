@@ -75,18 +75,6 @@ public class PokerChips {
             state.put("useWinner",useWinner);
             state.put("checkOrCall",isRaise);   //true=call
             state.put("currentRaise",raise);
-            /*int temp=checkOnlyWinner();
-            if(temp==-1){
-                state.put("roundWinner",false);
-            }
-            else{
-                if(i==temp){
-                    state.put("roundWinner",true);
-                }
-                else{
-                    state.put("roundWinner",false);
-                }
-            }*/
             player.add(state);
         }
         return player;
@@ -109,6 +97,7 @@ public class PokerChips {
         }
         int temp=checkOnlyWinner();
         if(temp!=-1){
+            useWinner=true;
             List<Integer>winner=new ArrayList<>();
             winner.add(temp);
             return updateWinner(winner);
@@ -129,7 +118,7 @@ public class PokerChips {
     }
 
     public void afterEachRound(){
-        if(checkGameEnded()){
+        if(checkGameEnded()||round==4){
             useWinner=true;
         }
         else{
@@ -226,6 +215,9 @@ public class PokerChips {
     }
 
     public String updateWinner(List<Integer>winner) {
+        if(!useWinner){
+            throw new IllegalStateException("no winner yet");
+        }
         int cnt=0;
         for (int i = 0; i < numOfPlayers; i++) {
             //int get = players.get(i).getMoney();
@@ -351,12 +343,18 @@ public class PokerChips {
         if(isRaise){
             throw new IllegalStateException("invalid move can't check");
         }
+        if(useWinner){
+            throw new IllegalStateException("can't make a move, there must be a winner");
+        }
         addStack(0);
         updateTurn();
         cnt++;
     }
 
     public void fold(int j) {
+        if(useWinner){
+            throw new IllegalStateException("can't make a move, there must be a winner");
+        }
         addStack(1);
         players.get(j).doNotPlay();
         updateTurn();
@@ -365,6 +363,9 @@ public class PokerChips {
     }
 
     public void raise(int j, int x) {
+        if(useWinner){
+            throw new IllegalStateException("can't make a move, there must be a winner");
+        }
         int update;
         raise = x;
         update = players.get(j).getMoney();
@@ -385,6 +386,9 @@ public class PokerChips {
     public void call(int j) {
         if(!isRaise){
             throw new IllegalStateException("invalid move can't call");
+        }
+        if(useWinner){
+            throw new IllegalStateException("can't make a move, there must be a winner");
         }
         int update = players.get(j).getMoney();
         call = raise - called[j];

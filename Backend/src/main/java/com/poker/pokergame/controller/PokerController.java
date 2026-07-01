@@ -90,6 +90,9 @@ public class PokerController {                                  //poker is consi
         catch(IllegalArgumentException e){
             return e.getMessage();
         }
+        catch(IllegalStateException e){
+            return e.getMessage();
+        }
     }
 
     @PostMapping("/{gameID}/call")
@@ -107,8 +110,13 @@ public class PokerController {                                  //poker is consi
 
     @PostMapping("/{gameID}/fold")
     public String fold(@PathVariable String gameID){
-        game.getGame(gameID).fold(game.getGame(gameID).getTurn());
-        return game.getGame(gameID).afterEachAction();
+        try{
+            game.getGame(gameID).fold(game.getGame(gameID).getTurn());
+            return game.getGame(gameID).afterEachAction();
+        }
+        catch(IllegalStateException e){
+            return e.getMessage();
+        }
         //return "fold done";
     }
 
@@ -118,6 +126,9 @@ public class PokerController {                                  //poker is consi
             return game.getGame(gameID).updateWinner(id);
         }
         catch(IllegalArgumentException e){
+            return e.getMessage();
+        }
+        catch(IllegalStateException e){
             return e.getMessage();
         }
     }
