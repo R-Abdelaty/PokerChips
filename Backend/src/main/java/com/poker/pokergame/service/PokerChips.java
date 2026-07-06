@@ -108,6 +108,7 @@ public class PokerChips {
     public void afterEachGame(){
         gameEnded();
         setDefault1();
+        setDefault2();
         updateStarter();
         updateEnd();
         useWinner=false;
