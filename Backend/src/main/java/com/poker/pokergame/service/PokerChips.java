@@ -108,7 +108,6 @@ public class PokerChips {
     public void afterEachGame(){
         gameEnded();
         setDefault1();
-        setDefault2();
         updateStarter();
         updateEnd();
         useWinner=false;
@@ -169,10 +168,12 @@ public class PokerChips {
     }
 
     private void setDefault1() {
-        table = 0;
-        foldedPlayers=0;
+        table = cnt = tempFoldedPlayers = foldedPlayers = raise = call = 0;
+        bider = -1;
+        isRaise = false;
         end = false;
         for(int i=0;i<numOfPlayers;i++){
+            called[i]=0;
             if(players.get(i).getMoney()!=0) players.get(i).Play();
             else foldedPlayers++;
         }
