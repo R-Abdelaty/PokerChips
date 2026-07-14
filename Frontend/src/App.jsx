@@ -6,38 +6,50 @@ import pic from "./graphics/pic.webp";
 import React, { useRef } from "react";
 import Start from './Start.jsx'
 import Game from './Game.jsx'
-
-
+import { getid } from './Start.jsx';
+const url = "10.164.171.191:8080"
 // Api call POST and GET function
-      export const postrec = async (r, b) => {
+      export const postrec = async (r, b,err) => {
+        const cont = new AbortController();
+        setTimeout(() => {
+          cont.abort()
+        }, 4000);
         try {
-          const res = await fetch(`http://10.22.153.240:8080/poker/${r}`, {
+          const res = await fetch(`http://${url}/poker/${getid()}${r}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(b)
+            body: JSON.stringify(b),
+            signal: cont.signal
           });
-    
+          
           const result = await res.text();
           console.log(result)
           return result;
     
         } catch (error) {
-          console.log("POST request failed:", error);
+          err()
+          return false;
         }
       }
-      export const getrec = async (r) => {
+      export const getrec = async (r,err) => {
+        const cont = new AbortController();
+        setTimeout(() => {
+          cont.abort()
+        }, 4000);
         try {
-          const res = await fetch(`http://10.22.153.240:8080/poker/${r}`, {
+          const res = await fetch(`http://${url}/poker/${getid()}${r}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
+            signal: cont.signal
           });
-    
+          
           const result = await res.json();
           console.log(result)
           return result;
     
         } catch (error) {
-          console.log("GET request failed:", error);
+          err()
+          return false;
         }
       }
 // -------------------
@@ -45,24 +57,46 @@ import Game from './Game.jsx'
 
 
 function App() {
-
+  
   const [playerN, setN] = useState(2)
 
   const [width, setw] = useState("0px")
   const [screen, setScreen] = useState("start")
 
 
-// Updates the (--width) css variable on window size change and playerN
+// Updates the (--width) css variable on real width changes and ignores keyboard size change (Ai helped here).
+      const lastWidthRef = useRef(window.innerWidth);
+
       useEffect(() => {
-        function update() {
-          let x = (window.innerWidth > 0.8182 * window.innerHeight ? 0.8182 * window.innerHeight : window.innerWidth);
-          setw(x + 1 + "px");
+        function calculateWidth() {
+          return Math.min(window.innerWidth, 0.8182 * window.innerHeight) + "px";
         }
-        update();
+
+        function update() {
+          const currentWidth = window.innerWidth;
+
+          if (currentWidth === lastWidthRef.current) {
+            return;
+          }
+
+          lastWidthRef.current = currentWidth;
+          setw(calculateWidth());
+        }
+
+        function forceUpdate() {
+          lastWidthRef.current = window.innerWidth;
+          setw(calculateWidth());
+        }
+
+        forceUpdate();
+
         window.addEventListener("resize", update);
-        return () => { window.removeEventListener("resize", update); }
-      }
-        , [window.innerWidth]);
+        window.addEventListener("orientationchange", forceUpdate);
+        return () => {
+          window.removeEventListener("resize", update);
+          window.removeEventListener("orientationchange", forceUpdate);
+        }
+      }, []);
 
 //-------------------------
 
@@ -73,7 +107,8 @@ function App() {
 
   return (
     <>
-      <div id="root" style={{ "--width": width }}>
+
+      <div className="appRoot" style={{ "--width": width }}>
         <div className="screen" style={{ zIndex: "999" }}>
           <div className="background" style={{ zIndex: "-1" }}></div>
           {screen =="start" && <Start w = {width} playerN={playerN} setN={setN} Switch = {()=>{setScreen("game")}}/>}

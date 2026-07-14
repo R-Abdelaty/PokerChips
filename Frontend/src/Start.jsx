@@ -6,7 +6,14 @@ import React, { useRef } from "react";
 import { postrec } from './App';
 import './App.css'
 import './start.css'
+let id = ""
 
+export const getid = ()=>{
+  if(id != ""){
+    return id+"/";
+  }
+  else{return ""}
+}
 
 function Start({ width, Switch,playerN,setN }) {
 
@@ -16,6 +23,10 @@ function Start({ width, Switch,playerN,setN }) {
   const [started, start] = useState(false)
   const [startedback, startb] = useState(false)
   const [ingame, setgame] = useState(false)
+  const [reddish,setreddish] = useState(false)
+  const [throww,seterr] = useState(false)
+  const [throwwback,seterrb] = useState(false)
+
 
 
   const [chipN, setc] = useState(5000)
@@ -32,11 +43,6 @@ function Start({ width, Switch,playerN,setN }) {
       timeoutref.current = setTimeout(() => {
         if (holdingplay) {
           formRef.current.requestSubmit();
-          setTimeout(() => {
-            Switch()
-          }, 2000);
-          setplay(false)
-          setgame(true)
         }
       }, 500)
     }
@@ -77,7 +83,7 @@ function Start({ width, Switch,playerN,setN }) {
       PLayers.push({ [(names[i] != "") ? names[i] : `Guest${i + 1}`]: chip })
     }
     console.log(PLayers)
-    postrec("player", PLayers)
+    postrec("player", PLayers,neterr)
   }
 
   useEffect(() => {
@@ -85,14 +91,24 @@ function Start({ width, Switch,playerN,setN }) {
   }, [playerN])
 
   //------------------------
-
+  const neterr = ()=>{
+    seterr(true)
+    seterrb(false)
+    setTimeout(() => {
+      seterr(false)
+      seterrb(true)
+    }, 3000);
+  }
   //start Settings submit
-  const subm = (e) => {
+  const subm = async(e) => {
     e.preventDefault();
     let data = new FormData(e.target)
-    let chipInput = Number(data.get("chips"))
-    if (!Number.isFinite(chipInput) || chipInput <= 0) {
-      //throw visible error here----------------------------------------------------------!!!!!
+    let raw = data.get("chips")
+    let chipInput = Number(raw)
+    const isNumber = raw.trim() !== "" && !Number.isNaN(chipInput);
+    if (!isNumber || chipInput <= 0) {
+      setreddish(true)
+      setplay(false)
     }
 
     else {
@@ -100,9 +116,19 @@ function Start({ width, Switch,playerN,setN }) {
       for (let m = 0; m < playerN; m++) {
         names.push(data.get(`player${m + 1}`))
       }
-      postrec("start", "")
-      console.log("started")
-      createPlayers(chipInput, names)
+      id = await postrec("start","",neterr)
+      if(id != false){
+
+        console.log("started")
+        console.log(id)
+        createPlayers(chipInput, names)
+        setTimeout(() => {
+          Switch()
+        }, 2000);
+        setgame(true)
+      }
+      setplay(false)
+            
     }
   }
   //----------------------
@@ -168,10 +194,11 @@ function Start({ width, Switch,playerN,setN }) {
         <div className='btnC'><div className={`${holdingstart && "starthold"}`}><button className="start" onContextMenu={handleContextMenu} onPointerDown={() => { setstart(true); }} onPointerUp={() => { setstart(false) }}><h3>START</h3></button></div></div>
       </div>
       <form onSubmit={subm} ref={formRef} >
+        <div className={`neterror ${throww && "comein"} ${throwwback && "comeout"}`}><div><h2>Check Network Connection</h2></div></div>
         <div className={`startsettings ${ingame && "middle"}`}>
-          <div className={`backdiv ${ingame && "disappear"}`} ><button className="back" onClick={() => { flip(started, start, startedback, startb); setstart(false) }}></button></div>
+          <div className={`backdiv ${ingame && "disappear"}`} ><button type='button' className="back" onClick={() => { flip(started, start, startedback, startb); setstart(false) }}></button></div>
           <div className={`gameDetails ${ingame && "disappear"}`}>
-            <div style={{ ...centered("0px", "row", "space-evenly"), width: width }}>
+            <div className={"detialsdiv"}style={{ ...centered("0px", "row", "space-evenly")}}>
               <div style={centered("0px", "column")}>
                 <h4>Players</h4>
                 <div style={{ display: "flex", gap: "0.7rem" }}>
@@ -184,7 +211,7 @@ function Start({ width, Switch,playerN,setN }) {
               <div style={centered("0px", "column")}>
                 <h4>Starting Chips</h4>
                 <div style={{ display: "flex", gap: "0.7rem" }}>
-                  <input name='chips' type="text" placeholder='Chips' value={chipN} onChange={(e) => { setc(e.target.value) }} />
+                  <input className={`${reddish && "reddish"}`} name='chips' type="text" placeholder='Chips' value={chipN} onChange={(e) => { setc(e.target.value) }} />
                   <h3>x</h3>
                   <img src={chip} />
                 </div>
@@ -193,7 +220,7 @@ function Start({ width, Switch,playerN,setN }) {
           </div>
 
           <div className="minitablediv">
-            <div className={`minitable ${ingame && "minitablestart"} `}><div style={{ zIndex: "999" }} className={` ${holdingplay && "btnhold"} ${ingame && "disappear"}`}><button type='button' onPointerDown={() => { setplay(true); }} onPointerUp={() => { setplay(false) }}><div>Play</div></button></div></div>
+            <div className={`minitable ${ingame && "minitablestart"} `}><div style={{ zIndex: "999" }} className={` ${holdingplay && "btnhold"} ${ingame && "disappear"}`}><button type='button' onPointerDown={() => {setplay(true); }} onPointerUp={() => { setplay(false) }}><div>Play</div></button></div></div>
             <div className={`minigrid ${ingame && "disappear"}`}>
               {miniplay}
             </div>

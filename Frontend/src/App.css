@@ -1,6 +1,13 @@
 html{
   font-size: 12px;
 }
+html,body,#root{
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 
 html,body,h1,h2,h3,h4{
   padding: none;
@@ -44,7 +51,7 @@ h1{
   font-size: 8rem;
   color: #f9f6ee;
   line-height: 7rem;
-  max-width: 80vh ;
+  max-width: 80svh ;
   text-align: center;
 }
 h2{
@@ -69,35 +76,37 @@ h4{
   color: #f9f6ee;
   text-align: center;
 }
-#root{
-  width: 100vw;
-  height: 100dvh;
-  height: 100dvh;
+#root,
+.appRoot{
+  width: 100%;
+  height: 100svh;
   background-color: #2a5540;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 .screen{
   
-  height: 100dvh;
+  height: 100svh;
   aspect-ratio: 9/11 ;
   width: var(--width);
   display: flex;
   background-color: #1C3048;
   overflow-x: hidden;
-  overflow: none;
+  overflow: hidden;
   scrollbar-width: none;
+  position: relative;
 
 }
 .backdiv{
   width: var(--width);
   height: 5rem;
-  max-height:10vh;
+  max-height:10svh;
   
 }
 .back{
-  width: 25vw;
+  width: 5rem;
   max-width: 70px;
   aspect-ratio: 1/1;
   background-image: url(graphics/back.svg);
@@ -117,13 +126,13 @@ outline: none;
 }
 
 .background{
-  position: fixed;
+  position: absolute;
  background-image: url(graphics/cardsbackground.webp);
   background-position: center;
   
   background-repeat: none;
   background-size: cover;
-  height: 100dvh;
+  height: 100svh;
   width: var(--width);
   aspect-ratio: 9/11;
   opacity: 0.4;
@@ -204,8 +213,77 @@ outline: none;
     font-size: 6rem;
   }
   .table{
-    height: 65vh;
-    margin: 7vh 0 0 0;
+    height: 65svh;
+    margin: 7svh 0 0 0;
     }
   
 }
+.reddish{
+  background-color:rgb(250, 136, 105) !important ;
+  color: black;
+}
+.reddishb{
+
+  background-color:rgb(160, 57, 29) !important ;
+  color: black;
+}
+
+
+  .neterror{
+    position: absolute;
+    width: var(--width);
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 1vh;
+    transform: translateY(-15vh);
+    z-index: 9999;
+    div{
+      width:calc( var(--width)*0.9);
+      background-color: #ffaf9a;
+      border: 4px solid rgb(253, 86, 45);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 2rem;
+      height: 10vh;
+    }
+    h2{
+      color: #1f1f1f;
+    }
+
+  }
+  .comein{
+    animation: comein 0.75s ease forwards;
+  }
+  .comeout{
+    animation: comeout 0.75s ease forwards;
+  }
+  @keyframes comein {
+    0%{
+      transform: translateY(-15vh);
+    }
+    100%{
+      transform:translateY(0) ;
+    }
+  }
+  @keyframes comeout{
+    100%{
+      transform: translateY(-15vh);
+    }
+    0%{
+      transform:translateY(0) ;
+    }
+  }
+  @media (max-width : 200px) {
+    html{
+      font-size: 6px;
+    }
+  }
+  @media (max-height : 500px) {
+    html{
+      font-size: 4px;
+    }
+  }
+
