@@ -150,8 +150,8 @@
     .minigrid{
     height: 60svh;
     min-height: 20px;
-    min-width: 300px;
-    width: 40svh;
+    min-width: 0;
+    width: min(var(--width), max(40svh, 300px));
     position: absolute;
     display: grid;
     grid-template-columns: repeat(3,1fr);

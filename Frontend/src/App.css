@@ -1,5 +1,5 @@
 html{
-  font-size: 12px;
+  font-size: clamp(8px, 3vmin, 12px);
 }
 html,body,#root{
   margin: 0;
@@ -48,10 +48,10 @@ h1{
    font-family: "Bebas Neue", serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 8rem;
+  font-size: clamp(5rem, 22vw, 8rem);
   color: #f9f6ee;
   line-height: 7rem;
-  max-width: 80svh ;
+  max-width: 100%;
   text-align: center;
 }
 h2{
@@ -117,6 +117,22 @@ h4{
   border: none;
   cursor: pointer;
 outline: none;
+}
+
+.valuebtn,
+.back,
+.undo,
+.raisebutton,
+.exit,
+.winnerbanner,
+.winbut button {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.gameDetails input,
+.raisemenu input {
+  min-height: 44px;
 }
 .screen::-webkit-scrollbar {
   display: none;
@@ -189,29 +205,13 @@ outline: none;
     100%{border: 9px solid #f5bf29;}
   }
 
-@media (max-height:600px) {
-  html{
-    font-size: 11px;
-  }
-  
-}
-
 @media (max-width:500px) {
-  html{
-    font-size: 12px;
-  }
   .playerinp{
     font-size: 2rem !important;
   }
   
 }
 @media (max-width:350px) {
-  html{
-    font-size: 8px;
-  }
-  h1{
-    font-size: 6rem;
-  }
   .table{
     height: 65svh;
     margin: 7svh 0 0 0;
@@ -276,14 +276,8 @@ outline: none;
       transform:translateY(0) ;
     }
   }
-  @media (max-width : 200px) {
+  @media (orientation: landscape) and (max-height: 600px) {
     html{
-      font-size: 6px;
+      font-size: clamp(8px, 2svh, 12px);
     }
   }
-  @media (max-height : 500px) {
-    html{
-      font-size: 4px;
-    }
-  }
-
