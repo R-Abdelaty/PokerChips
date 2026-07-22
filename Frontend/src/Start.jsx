@@ -6,7 +6,8 @@ import React, { useRef } from "react";
 import { postrec } from './App';
 import './App.css'
 import './start.css'
-let id = ""
+const match = window.location.pathname.match(/^\/([^/]+)$/)
+let id = match ? decodeURIComponent(match[1]) : ""
 
 export const getid = ()=>{
   if(id != ""){
@@ -117,8 +118,9 @@ function Start({ width, Switch,playerN,setN }) {
         names.push(data.get(`player${m + 1}`))
       }
       id = await postrec("start","",neterr)
-      if(id != false){
-
+      if(id !== false){
+        id = id.trim()
+        window.history.pushState({}, "", `/${encodeURIComponent(id)}`);
         console.log("started")
         console.log(id)
         createPlayers(chipInput, names)

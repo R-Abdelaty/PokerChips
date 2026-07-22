@@ -293,7 +293,8 @@ function Game({ width, playern }) {
         // let s = [{"money" : 100,name : "ahmed","table":20},{"money":200,name:"juna"},{money:200,name:"juna"},{money:200,name:"juna"},{money:200,name:"juna"},{money:200,name:"juna"}]
        if(s != false){
            const t = await getTurn() //getTurn() wait for what the result looks like
-           for (let i = 0; i < playerN; i++) {
+           setN(s.length)
+           for (let i = 0; i < s.length; i++) {
                updatePlayer(i, s[i].money, (t == i) ? true : false, s[i].name, !s[i].play)
             }
             setcorc(s[0].checkOrCall)
@@ -323,7 +324,10 @@ function Game({ width, playern }) {
                         </div>
                     </div>
                 </div>
-                <div className='undo' onClick={undo}> </div>
+                <button type='button' className='undo' onClick={undo} aria-label='Undo last action'>
+                    <span className='undoIcon' aria-hidden='true'></span>
+                    <span className='undoLabel' aria-hidden='true'>Undo</span>
+                </button>
                 <div style={{ display: raising ? "flex" : "none" }} className="raisemenuback"><div className="raisemenu"><button onClick={() => { setraise(false); setr(false) }} className='exit'>X</button><h2>How much?</h2><input className={`${reddish && "reddish"}`} type="text" name='raise' value={raisenum} onChange={(e) => { setrnum(e.target.value) }} placeholder='Enter Amount' /> <button type='button' onClick={raisebtn} className='raisebutton'>Raise</button></div></div>
                 <div className='rounddiv'><h3>Round : {round}</h3></div>
                 <div className="table"></div>
