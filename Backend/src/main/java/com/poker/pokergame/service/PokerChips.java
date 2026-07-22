@@ -328,6 +328,9 @@ public class PokerChips {
             table-= temp.get(3);
             table+=prev;
             called[turn]=prev;
+            raise=stack.peek().get(3);
+            bider=stack.peek().get(4);
+            isRaise=stack.peek().get(5)==0?false:true;
         }
         if(!stack.isEmpty()){
             cnt=stack.peek().get(6);
