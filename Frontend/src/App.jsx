@@ -7,7 +7,8 @@ import React, { useRef } from "react";
 import Start from './Start.jsx'
 import Game from './Game.jsx'
 import { getid } from './Start.jsx';
-const url = "localhost:8080"
+//const url = "localhost:8080"
+const url = "10.102.213.191:8080"
 // Api call POST and GET function
 export const postrec = async (r, b, err) => {
   const cont = new AbortController();

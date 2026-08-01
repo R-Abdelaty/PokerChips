@@ -20,9 +20,14 @@ function Game({ width, playern }) {
     const [checkWinner, setcheckWinner] = useState(false)
     const [roundwinner, setroundwinner] = useState("")
     const [iswinning, setwin] = useState(false)
+    const [quit, setquit] = useState(false)
 
     const [table, setTable] = useState(10)
     const [round, setround] = useState(1)
+
+    const quitGame = () => {
+        window.location.assign(`${window.location.origin}/`)
+    }
 
     // Player 1
     const [player1, setPlayer1] = useState("Player 1");
@@ -310,6 +315,19 @@ function Game({ width, playern }) {
             <div className="game">
                 <div className={`neterror ${throww && "comein"} ${throwwback && "comeout"}`}><div><h2>Check Network Connection</h2></div></div>
                 <div style={{ display: iswinning ? "flex" : "none" }} className="winnerscreen"><div className="winnerback"><h2>{roundwinner} won!</h2></div></div>
+                <button type='button' className='gameexit' onClick={() => { setquit(true) }}>
+                    <span className='gameexitIcon'></span>
+                    <span className='gameexitLabel'>Exit</span>
+                </button>
+                {quit &&
+                    <div className="raisemenuback quitmenuback">
+                        <div className="raisemenu quitmenu">
+                            <button onClick={() => { setquit(false) }} className="exit">X</button>
+                            <p>Are you sure you want to quit this game?</p>
+                            <button type="button" onClick={quitGame} className="quitmenubutton quitconfirm">Quit Game</button>
+                        </div>
+                    </div>
+                }
                 <div className="choosewinnerback" style={{ display: checkWinner ? "flex" : "none" }}>
                     <div className="choosewinner">
                         <h2>Choose Winner</h2>
@@ -329,10 +347,9 @@ function Game({ width, playern }) {
                     <span className='undoLabel' aria-hidden='true'>Undo</span>
                 </button>
                 <div style={{ display: raising ? "flex" : "none" }} className="raisemenuback"><div className="raisemenu"><button onClick={() => { setraise(false); setr(false) }} className='exit'>X</button><h2>How much?</h2><input className={`${reddish && "reddish"}`} type="text" name='raise' value={raisenum} onChange={(e) => { setrnum(e.target.value) }} placeholder='Enter Amount' /> <button type='button' onClick={raisebtn} className='raisebutton'>Raise</button></div></div>
-                <div className='rounddiv'><h3>Round : {round}</h3></div>
                 <div className="table"></div>
                 <div className="playersgrid appear">
-                    <div className='center' style={{ gridRow: "2/4", gridColumn: 2, height: "100%" }}> <h2 style={{ textAlign: "center" }}>Table <br></br> {table}</h2></div>
+                    <div className='center tableinfo' style={{ gridRow: "2/4", gridColumn: 2, height: "100%" }}><h3>Round : {round}</h3><h2>{table} €</h2></div>
                     <div className="player" style={tableOrderer(1)}><div className={`banner ${folded1 && "fold"} ${current1 && "active"}`}><h3>{player1}</h3><h3>{chips1}</h3></div></div>
                     <div className="player" style={tableOrderer(2)}><div className={`banner ${folded2 && "fold"} ${current2 && "active"}`}><h3>{player2}</h3><h3>{chips2}</h3></div></div>
                     <div className="player" style={{ ...tableOrderer(3), ...(!playing3 && { display: "none" }) }}><div className={`banner ${folded3 && "fold"} ${current3 && "active"}`}><h3>{player3}</h3><h3>{chips3}</h3></div></div>

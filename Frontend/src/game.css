@@ -20,19 +20,11 @@
     border: solid 11px rgb(131, 66, 33);
   }
 
-  .rounddiv {
-    height: 4rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 9rem;
-
+  .tableinfo {
+    gap: 2rem;
   }
 
-  .rounddiv h3 {
+  .tableinfo h3 {
     font-size: 2rem;
   }
 
@@ -246,12 +238,12 @@
 }
 
 
-.undo {
+.undo,
+.gameexit {
   width: clamp(44px, 5rem, 60px);
   height: auto;
   position: absolute;
   top: clamp(0.25rem, 1vmin, 0.5rem);
-  left: clamp(0.25rem, 1vmin, 0.5rem);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -267,21 +259,79 @@
   -webkit-user-select: none;
 }
 
-.undoIcon {
+.gameexit {
+  left: clamp(0.25rem, 1vmin, 0.5rem);
+}
+
+.undo {
+  right: clamp(0.25rem, 1vmin, 0.5rem);
+}
+
+.undoIcon,
+.gameexitIcon {
   display: block;
   width: 100%;
   aspect-ratio: 1/1;
-  background-image: url(graphics/undo.svg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.undoLabel {
+.undoIcon {
+  background-image: url(graphics/undo.svg);
+}
+
+.gameexitIcon {
+  background-image: url(graphics/exit.svg);
+}
+
+.undoLabel,
+.gameexitLabel {
   font-size: 1.5rem;
   line-height: 1;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+.quitmenuback {
+  z-index: 1000;
+}
+
+.quitmenu {
+  width: min(calc(var(--width) * 0.7), 420px);
+  height: min(40svh, 340px);
+  min-height: 240px;
+  padding: 4rem 2rem 2rem;
+}
+
+.quitmenu p {
+  margin: 0;
+  color: #f9f6ee;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.quitmenubutton {
+  min-width: 8rem;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  background-color: antiquewhite;
+  border: 2px solid black;
+  border-radius: 10px;
+  color: #1f1f1f;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.quitconfirm {
+  background-color: rgb(160, 57, 29);
+  color: #f9f6ee;
+}
+
+.quitmenubutton:hover,
+.quitmenubutton:focus-visible {
+  border-color: #f5bf29;
+  outline: 2px solid #f5bf29;
 }
 
 .choosewinnerback{
@@ -299,7 +349,8 @@
 
 .choosewinner {
   width: calc(var(--width)*0.7);
-  height: 80svh;
+  height: 85svh;
+  padding: 2rem 0;
   z-index: 99;
 
   display: flex;
@@ -307,7 +358,7 @@
   align-items: center;
   flex-direction: column;
   position: relative;
-  background-color: rgb(33, 56, 82);
+  background-color: rgba(17, 30, 45, 1);
   border-radius: 30px;
   border: 8px solid #000000;
 
@@ -352,15 +403,16 @@
   
 }
 .winbut button {
-  width: 7rem;
+  width: 8rem;
   height: 4rem;
-  background: none;
-  border-radius: 1rem;
-  border: none;
-  color: #f5bf29;
+  background-color: #f4da90;
+  border-radius: 10px;
+  border: 2px solid black;
+  color: #1f1f1f;
+  cursor: pointer;
 }
 .winbut h3{
-  color: #f4da90;
+  color: #1f1f1f;
 }
 
 .selected button {
@@ -398,6 +450,9 @@
   }
   .winnerbanner{
     height: 8svh;
+  }
+  .quitmenu {
+    width: calc(var(--width) * 0.9);
   }
 }
 
