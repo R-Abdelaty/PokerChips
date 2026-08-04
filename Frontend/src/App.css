@@ -1,11 +1,35 @@
+:root {
+  --app-height: 100vh;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  background-color: #1c3048;
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --app-height: 100dvh;
+  }
+}
+
 html{
   font-size: clamp(8px, 3vmin, 12px);
+  background-color: #1c3048;
 }
 html,body,#root{
   margin: 0;
   width: 100%;
   height: 100%;
+  min-height: 100%;
   overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  position: fixed;
+  inset: 0;
+  background-color: #1c3048;
 }
 
 
@@ -79,8 +103,8 @@ h4{
 #root,
 .appRoot{
   width: 100%;
-  height: 100svh;
-  background-color: #2a5540;
+  height: var(--app-height);
+  background-color: #1c3048;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -88,7 +112,7 @@ h4{
 }
 .screen{
   
-  height: 100svh;
+  height: var(--app-height);
   aspect-ratio: 9/11 ;
   width: var(--width);
   display: flex;
@@ -148,10 +172,11 @@ outline: none;
   
   background-repeat: none;
   background-size: cover;
-  height: 100svh;
+  height: 100%;
   width: var(--width);
   aspect-ratio: 9/11;
   opacity: 0.4;
+  inset: 0;
   
 }
 

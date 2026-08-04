@@ -22,6 +22,11 @@ public class PokerController {                                  //poker is consi
         this.game=game;
     }
 
+    @GetMapping("/health")
+    public String health() {
+        return "ok";
+    }
+
     @PostMapping("/start")                                     //start game
     public String startGame() {
         return game.createGame();

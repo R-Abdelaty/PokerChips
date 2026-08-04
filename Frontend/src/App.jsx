@@ -69,6 +69,23 @@ function App() {
   const [width, setw] = useState("0px")
   const id = getGameIdFromUrl()
   const [screen, setScreen] = useState(id ? "game":"start")
+
+  // Wake a sleeping API as soon as the landing screen opens. This is deliberately
+  // silent: the user's actual game request still owns any visible network error.
+  useEffect(() => {
+    if (screen !== "start") return
+
+    const controller = new AbortController()
+    fetch(`${url}/poker/health`, {
+      method: "GET",
+      cache: "no-store",
+      signal: controller.signal,
+    }).catch(() => {
+      // A failed warm-up should never interrupt the start-screen experience.
+    })
+
+    return () => controller.abort()
+  }, [screen])
   
 
   // Updates the (--width) css variable on real width changes and ignores keyboard size change (Ai helped here).

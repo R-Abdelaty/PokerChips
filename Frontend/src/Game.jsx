@@ -14,6 +14,7 @@ function Game({ width, playern }) {
     const [checkorcall, setcorc] = useState(false)
     const [raising, setr] = useState(false)
     const [raisenum, setrnum] = useState("")
+    const [callAmount, setCallAmount] = useState(0)
     const [reddish, setreddish] = useState(false)
     const [inv, setinv] = useState(false)
     const timeoutref = useRef(null);
@@ -162,6 +163,7 @@ function Game({ width, playern }) {
                 setr(false)
                 await state()
                 setraise(false)
+                setrnum("")
                 setreddish(false)
             }
         }
@@ -311,6 +313,7 @@ function Game({ width, playern }) {
                updatePlayer(i, s[i].money, (t == i) ? true : false, s[i].name, !s[i].play)
             }
             setcorc(s[0].checkOrCall)
+            setCallAmount(s[t]?.callAmount ?? s[0].currentRaise ?? 0)
             setTable(s[0].table)
             setround(s[0].round)
             setcheckWinner(s[0].useWinner)
@@ -354,7 +357,7 @@ function Game({ width, playern }) {
                     <span className='undoIcon' aria-hidden='true'></span>
                     <span className='undoLabel' aria-hidden='true'>Undo</span>
                 </button>
-                <div style={{ display: raising ? "flex" : "none" }} className="raisemenuback"><div className="raisemenu"><button onClick={() => { setraise(false); setr(false) }} className='exit'>X</button><h2>How much?</h2><input className={`${reddish && "reddish"}`} type="text" name='raise' value={raisenum} onChange={(e) => { setrnum(e.target.value) }} placeholder='Enter Amount' /> <button type='button' onClick={raisebtn} className='raisebutton'>Raise</button></div></div>
+                <div style={{ display: raising ? "flex" : "none" }} className="raisemenuback"><div className="raisemenu"><button onClick={() => { setraise(false); setr(false); setrnum(""); setreddish(false) }} className='exit'>X</button><h2>How much?</h2><input className={`${reddish && "reddish"}`} type="text" name='raise' value={raisenum} onChange={(e) => { setrnum(e.target.value) }} placeholder='Enter Amount' /> <button type='button' onClick={raisebtn} className='raisebutton'>Raise</button></div></div>
                 <div className="table"></div>
                 <div className="playersgrid appear">
                     <div className='center tableinfo' style={{ gridRow: "2/4", gridColumn: 2, height: "100%" }}>
@@ -369,7 +372,7 @@ function Game({ width, playern }) {
                 </div>
                 <div className="bottombuttons appear">
                     {checkorcall ?
-                        (<div className='center'><div className={`${holdingcall && "btnhold"}`}><button style={{ zIndex: "999" }} className={`call`} onPointerDown={() => { setcall(true); }} onPointerUp={() => { setcall(false) }} ><h3>{raisenum}</h3></button></div></div>)
+                        (<div className='center'><div className={`${holdingcall && "btnhold"}`}><button style={{ zIndex: "999" }} className={`call`} onPointerDown={() => { setcall(true); }} onPointerUp={() => { setcall(false) }} ><h3>{callAmount}</h3></button></div></div>)
                         :
                         (<div className='center'><div className={`${holdingcheck && "btnhold"}`}><button style={{ zIndex: "999" }} className={`check`} onPointerDown={() => { setcheck(true); }} onPointerUp={() => { setcheck(false) }} ><h3>check</h3></button></div></div>)}
                     <div className='center'><div className={`${holdingfold && "btnhold"}`}><button style={{ zIndex: "999" }} className={`fold`} onPointerDown={() => { setfold(true); }} onPointerUp={() => { setfold(false) }} ><h3>fold</h3></button></div></div>

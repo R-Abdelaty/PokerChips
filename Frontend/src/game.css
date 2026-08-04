@@ -8,6 +8,10 @@
   justify-content: center;
   overflow: hidden;
   position: relative;
+  padding-top: var(--safe-top);
+  padding-right: var(--safe-right);
+  padding-bottom: var(--safe-bottom);
+  padding-left: var(--safe-left);
 
   .table {
     margin: 3svh 0 0 0;

@@ -13,13 +13,14 @@
 
 .startmenu{
   transition: 750ms ease all;
-  min-height: 100svh;
+  height: 100%;
+  min-height: 100%;
   max-width: var(--width);
   aspect-ratio: 9/11;
   z-index: 1;
   display: flex;
   .welcomeScreen{
-    height: 100svh;
+    height: 100%;
     max-width: var(--width);
     aspect-ratio: 9/11;
     display: flex;
@@ -48,14 +49,14 @@
    }
   }
   .startsettings{
-    height:100svh;
+    height:100%;
     aspect-ratio: 9/11;
     max-width: var(--width);
     display: flex;
     flex-direction: column;
     align-items: center;
     .gameDetails{
-      margin: 2svh 0 0 0 ;
+      margin: calc(2svh + var(--safe-top)) 0 0 0 ;
       width: var(--width);
       border-radius: 10px;
       height: 12rem;

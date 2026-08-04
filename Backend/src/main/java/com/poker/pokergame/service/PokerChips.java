@@ -75,6 +75,7 @@ public class PokerChips {
             state.put("useWinner",useWinner);
             state.put("checkOrCall",isRaise);   //true=call
             state.put("currentRaise",raise);
+            state.put("callAmount",Math.min(Math.max(raise-called[i],0),getPlayer(i).getMoney()));
             player.add(state);
         }
         return player;
