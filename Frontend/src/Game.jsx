@@ -293,6 +293,14 @@ function Game({ width, playern }) {
         }
 
     }
+    const returncards = (r)=>{
+        switch (r){
+            case 1:return
+            case 2:return <><div className='card flipnow'></div><div className='card flipnow'></div><div className='card flipnow'></div> </>
+            case 3:return <><div className='card flipped'></div><div className='card flipped'></div><div className='card flipped'></div><div className='card flipnow'></div> </>
+            case 4:return <><div className='card flipped'></div><div className='card flipped'></div><div className='card flipped'></div><div className='card flipped'></div><div className='card flipnow'></div> </>
+        }
+    }
     const state = async () => {
         const s = await getrec("state",neterr)
         // let s = [{"money" : 100,name : "ahmed","table":20},{"money":200,name:"juna"},{money:200,name:"juna"},{money:200,name:"juna"},{money:200,name:"juna"},{money:200,name:"juna"}]
@@ -349,7 +357,9 @@ function Game({ width, playern }) {
                 <div style={{ display: raising ? "flex" : "none" }} className="raisemenuback"><div className="raisemenu"><button onClick={() => { setraise(false); setr(false) }} className='exit'>X</button><h2>How much?</h2><input className={`${reddish && "reddish"}`} type="text" name='raise' value={raisenum} onChange={(e) => { setrnum(e.target.value) }} placeholder='Enter Amount' /> <button type='button' onClick={raisebtn} className='raisebutton'>Raise</button></div></div>
                 <div className="table"></div>
                 <div className="playersgrid appear">
-                    <div className='center tableinfo' style={{ gridRow: "2/4", gridColumn: 2, height: "100%" }}><h3>Round : {round}</h3><h2>{table} €</h2></div>
+                    <div className='center tableinfo' style={{ gridRow: "2/4", gridColumn: 2, height: "100%" }}>
+                     <div className="cards">{returncards(round)}</div> 
+                     <h2>{table} €</h2></div>
                     <div className="player" style={tableOrderer(1)}><div className={`banner ${folded1 && "fold"} ${current1 && "active"}`}><h3>{player1}</h3><h3>{chips1}</h3></div></div>
                     <div className="player" style={tableOrderer(2)}><div className={`banner ${folded2 && "fold"} ${current2 && "active"}`}><h3>{player2}</h3><h3>{chips2}</h3></div></div>
                     <div className="player" style={{ ...tableOrderer(3), ...(!playing3 && { display: "none" }) }}><div className={`banner ${folded3 && "fold"} ${current3 && "active"}`}><h3>{player3}</h3><h3>{chips3}</h3></div></div>
