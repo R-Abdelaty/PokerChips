@@ -4,6 +4,8 @@ import React, { useRef } from "react";
 import './game.css'
 import "./App.css"
 import { getrec, postrec } from "./App.jsx"
+import HoldHint from './HoldHint.jsx'
+import useHoldHint from './useHoldHint.js'
 function Game({ width, playern }) {
     const [playerN, setN] = useState(playern)
 
@@ -22,6 +24,7 @@ function Game({ width, playern }) {
     const [roundwinner, setroundwinner] = useState("")
     const [iswinning, setwin] = useState(false)
     const [quit, setquit] = useState(false)
+    const { hint, beginHold, completeHold, endHold } = useHoldHint()
 
     const [table, setTable] = useState(10)
     const [round, setround] = useState(1)
@@ -95,6 +98,7 @@ function Game({ width, playern }) {
         if (holdingcheck) {
             timeoutref.current = setTimeout(async () => {
                 if (holdingcheck) {
+                    completeHold()
                     let x = await postrec("check", "",neterr)
                     if(x != false){
                         checkwin(x)
@@ -106,11 +110,12 @@ function Game({ width, playern }) {
             }, 500)
         }
         else { clearTimeout(timeoutref.current); }
-    }, [holdingcheck])
+    }, [holdingcheck, completeHold])
     useEffect(() => {
         if (holdingcall) {
             timeoutref.current = setTimeout(async () => {
                 if (holdingcall) {
+                    completeHold()
                     let x = await postrec("call", "",neterr)
                     if(x != false ){
                         checkwin(x)
@@ -121,11 +126,12 @@ function Game({ width, playern }) {
             }, 500)
         }
         else { clearTimeout(timeoutref.current); }
-    }, [holdingcall])
+    }, [holdingcall, completeHold])
     useEffect(() => {
         if (holdingfold) {
             timeoutref.current = setTimeout(async () => {
                 if (holdingfold) {
+                    completeHold()
                     let x = await postrec("fold", "",neterr)
                     if(x != false){
                     checkwin(x)
@@ -136,17 +142,18 @@ function Game({ width, playern }) {
             }, 500)
         }
         else { clearTimeout(timeoutref.current); }
-    }, [holdingfold])
+    }, [holdingfold, completeHold])
     useEffect(() => {
         if (holdingraise) {
             timeoutref.current = setTimeout(async () => {
                 if (holdingraise) {
+                    completeHold()
                     setr(true)
                 }
             }, 500)
         }
         else { clearTimeout(timeoutref.current); }
-    }, [holdingraise])
+    }, [holdingraise, completeHold])
 
     const raisebtn = async () => {
         const isNumber = raisenum.trim() !== "" && !Number.isNaN(Number(raisenum));
@@ -372,11 +379,23 @@ function Game({ width, playern }) {
                 </div>
                 <div className="bottombuttons appear">
                     {checkorcall ?
-                        (<div className='center'><div className={`${holdingcall && "btnhold"}`}><button style={{ zIndex: "999" }} className={`call`} onPointerDown={() => { setcall(true); }} onPointerUp={() => { setcall(false) }} ><h3>{callAmount}</h3></button></div></div>)
+                        (<div className='center'><div className={`holdHintAnchor ${holdingcall && "btnhold"}`}>
+                            <HoldHint hint={hint} target="call" />
+                            <button style={{ zIndex: "999" }} className={`call`} onPointerDown={(event) => beginHold(event, setcall)} onPointerUp={() => endHold(setcall, 'call')} onPointerCancel={() => endHold(setcall, 'call')}><h3>{callAmount}</h3></button>
+                        </div></div>)
                         :
-                        (<div className='center'><div className={`${holdingcheck && "btnhold"}`}><button style={{ zIndex: "999" }} className={`check`} onPointerDown={() => { setcheck(true); }} onPointerUp={() => { setcheck(false) }} ><h3>check</h3></button></div></div>)}
-                    <div className='center'><div className={`${holdingfold && "btnhold"}`}><button style={{ zIndex: "999" }} className={`fold`} onPointerDown={() => { setfold(true); }} onPointerUp={() => { setfold(false) }} ><h3>fold</h3></button></div></div>
-                    <div className='center'><div className={`${holdingraise && "btnhold"}`}><button style={{ zIndex: "999" }} className={`raise`} onPointerDown={() => { setraise(true); }} onPointerUp={() => { setraise(false) }} ><h3>raise</h3></button></div></div>
+                        (<div className='center'><div className={`holdHintAnchor ${holdingcheck && "btnhold"}`}>
+                            <HoldHint hint={hint} target="check" />
+                            <button style={{ zIndex: "999" }} className={`check`} onPointerDown={(event) => beginHold(event, setcheck)} onPointerUp={() => endHold(setcheck, 'check')} onPointerCancel={() => endHold(setcheck, 'check')}><h3>check</h3></button>
+                        </div></div>)}
+                    <div className='center'><div className={`holdHintAnchor ${holdingfold && "btnhold"}`}>
+                        <HoldHint hint={hint} target="fold" />
+                        <button style={{ zIndex: "999" }} className={`fold`} onPointerDown={(event) => beginHold(event, setfold)} onPointerUp={() => endHold(setfold, 'fold')} onPointerCancel={() => endHold(setfold, 'fold')}><h3>fold</h3></button>
+                    </div></div>
+                    <div className='center'><div className={`holdHintAnchor ${holdingraise && "btnhold"}`}>
+                        <HoldHint hint={hint} target="raise" />
+                        <button style={{ zIndex: "999" }} className={`raise`} onPointerDown={(event) => beginHold(event, setraise)} onPointerUp={() => endHold(setraise, 'raise')} onPointerCancel={() => endHold(setraise, 'raise')}><h3>raise</h3></button>
+                    </div></div>
                 </div>
             </div>
         </>)

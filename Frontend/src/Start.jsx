@@ -4,6 +4,8 @@ import chip from "./graphics/redchip.webp";
 import pic from "./graphics/pic.webp";
 import React, { useRef } from "react";
 import { postrec } from './App';
+import HoldHint from './HoldHint.jsx'
+import useHoldHint from './useHoldHint.js'
 import './App.css'
 import './start.css'
 const match = window.location.pathname.match(/^\/([^/]+)$/)
@@ -35,6 +37,7 @@ function Start({ width, Switch,playerN,setN }) {
 
   const formRef = useRef(null);
   const timeoutref = useRef(null);
+  const { hint, beginHold, completeHold, endHold } = useHoldHint('start')
 
 
 
@@ -43,17 +46,18 @@ function Start({ width, Switch,playerN,setN }) {
     if (holdingplay) {
       timeoutref.current = setTimeout(() => {
         if (holdingplay) {
+          completeHold()
           formRef.current.requestSubmit();
         }
       }, 500)
     }
     else { clearTimeout(timeoutref.current); }
-  }, [holdingplay])
+  }, [holdingplay, completeHold])
 
   useEffect(() => {
-    if (holdingstart) { timeoutref.current = setTimeout(() => { if (holdingstart) { flip(started, start, startedback, startb); } }, 500) }
+    if (holdingstart) { timeoutref.current = setTimeout(() => { if (holdingstart) { completeHold(); flip(started, start, startedback, startb); } }, 500) }
     else { clearTimeout(timeoutref.current); }
-  }, [holdingstart])
+  }, [holdingstart, completeHold])
   //--------------------------------------
 
   // Players init
@@ -193,7 +197,18 @@ function Start({ width, Switch,playerN,setN }) {
     <div className={`startmenu ${started && "started"} ${startedback && "startedback"} `}>
       <div className="welcomeScreen">
         <h1 className="nabla">WELCOME TO<br></br> <span className="red">POKERCHIPS</span></h1>
-        <div className='btnC'><div className={`${holdingstart && "starthold"}`}><button className="start" onContextMenu={handleContextMenu} onPointerDown={() => { setstart(true); }} onPointerUp={() => { setstart(false) }}><h3>START</h3></button></div></div>
+        <div className='btnC holdHintAnchor'>
+          <HoldHint hint={hint} target="start" />
+          <div className={`${holdingstart && "starthold"}`}>
+            <button
+              className="start"
+              onContextMenu={handleContextMenu}
+              onPointerDown={(event) => beginHold(event, setstart)}
+              onPointerUp={() => endHold(setstart, 'start')}
+              onPointerCancel={() => endHold(setstart, 'start')}
+            ><h3>START</h3></button>
+          </div>
+        </div>
       </div>
       <form onSubmit={subm} ref={formRef} >
         <div className={`neterror ${throww && "comein"} ${throwwback && "comeout"}`}><div><h2>Check Network Connection</h2></div></div>
@@ -222,7 +237,17 @@ function Start({ width, Switch,playerN,setN }) {
           </div>
 
           <div className="minitablediv">
-            <div className={`minitable ${ingame && "minitablestart"} `}><div style={{ zIndex: "999" }} className={` ${holdingplay && "btnhold"} ${ingame && "disappear"}`}><button type='button' onPointerDown={() => {setplay(true); }} onPointerUp={() => { setplay(false) }}><div>Play</div></button></div></div>
+            <div className={`minitable ${ingame && "minitablestart"} `}>
+              <div style={{ zIndex: "999" }} className={`holdHintAnchor ${holdingplay && "btnhold"} ${ingame && "disappear"}`}>
+                <HoldHint hint={hint} target="play" />
+                <button
+                  type='button'
+                  onPointerDown={(event) => beginHold(event, setplay)}
+                  onPointerUp={() => endHold(setplay, 'play')}
+                  onPointerCancel={() => endHold(setplay, 'play')}
+                ><div>Play</div></button>
+              </div>
+            </div>
             <div className={`minigrid ${ingame && "disappear"}`}>
               {miniplay}
             </div>
