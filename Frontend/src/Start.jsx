@@ -121,7 +121,6 @@ function Start({ width, Switch,playerN,setN }) {
       if(id !== false){
         id = id.trim()
         window.history.pushState({}, "", `/${encodeURIComponent(id)}`);
-        window.dispatchEvent(new Event('pokerchips:navigation'))
         console.log("started")
         console.log(id)
         createPlayers(chipInput, names)
@@ -195,7 +194,6 @@ function Start({ width, Switch,playerN,setN }) {
       <div className="welcomeScreen">
         <h1 className="nabla">WELCOME TO<br></br> <span className="red">POKERCHIPS</span></h1>
         <div className='btnC'><div className={`${holdingstart && "starthold"}`}><button className="start" onContextMenu={handleContextMenu} onPointerDown={() => { setstart(true); }} onPointerUp={() => { setstart(false) }}><h3>START</h3></button></div></div>
-        <a className="learnMore" href="#how-pokerchips-works">How it works</a>
       </div>
       <form onSubmit={subm} ref={formRef} >
         <div className={`neterror ${throww && "comein"} ${throwwback && "comeout"}`}><div><h2>Check Network Connection</h2></div></div>
@@ -217,7 +215,7 @@ function Start({ width, Switch,playerN,setN }) {
                 <div style={{ display: "flex", gap: "0.7rem" }}>
                   <input className={`${reddish && "reddish"}`} name='chips' type="text" placeholder='Chips' value={chipN} onChange={(e) => { setc(e.target.value) }} />
                   <h3>x</h3>
-                  <img src={chip} alt="" aria-hidden="true" />
+                  <img src={chip} />
                 </div>
               </div>
             </div>

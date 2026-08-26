@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-# Add the generated /sitemap.xml in Google Search Console after deployment.
